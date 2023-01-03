@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTodoState } from '../Context/TodoContext';
 
 
 const TodoHeadBlock = styled.div`
@@ -27,13 +28,17 @@ const TodoHeadBlock = styled.div`
 `;
 
 function TodoHead(props) {
+    const todos = useTodoState();
+    const undoneTasks = todos.filter(todo => todo.done === false)
+    
     const date = new Date();
     const days = ['일','월','화','수','목','금','토'];
+
     return (
        <TodoHeadBlock>
             <h1>{`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일`}</h1>
             <div className='day'>{`${days[date.getDay()]}요일`}</div>
-            <div className='tasks-left'>할 일 2개 남음</div>
+            <div className='tasks-left'>할 일 {undoneTasks.length}개 남음</div>
        </TodoHeadBlock>
     );
 }
